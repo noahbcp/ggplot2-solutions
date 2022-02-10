@@ -92,7 +92,7 @@ mpg_metric <- mpg %>%
            .keep = c('unused'))
 ```
 
-The combined fuel economy is also pretty important so lets use `mutate` and `select` to add a new column, `combined` to our dataset that is the mean of the respective rows in hwy and cty. 
+The combined fuel economy is also pretty important so lets use `mutate` and `select` to add a new column, `combined`, to our dataset that is the mean of the respective rows in `hwy` and `cty`. 
 
 ```R
 mpg_metric <- mpg %>%
