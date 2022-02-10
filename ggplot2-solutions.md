@@ -40,11 +40,11 @@ print(mpg)
 
 >List five functions that you could use to get more information about the mpg dataset.
 
-`class` - allows us to check the class of the `mpg` object
-`str` - returns the structure of the `mpg` object
-`summary` - gives us a summary of the `mpg` object including some basic statistics (mean, median, mode, quartiles, etc.)
-`View` - opens the entire `mpg` object allowing it to be viewed as a spreadsheet
-`dim` - returns the dimensions (nrow, ncol) of the `mpg` object. `str` and `summary` will also return this information.
+* `class` - allows us to check the class of the `mpg` object
+* `str` - returns the structure of the `mpg` object
+* `summary` - gives us a summary of the `mpg` object including some basic statistics (mean, median, mode, quartiles, etc.)
+* `View` - opens the entire `mpg` object allowing it to be viewed as a spreadsheet
+* `dim` - returns the dimensions (nrow, ncol) of the `mpg` object. `str` and `summary` will also return this information.
 
 
 
