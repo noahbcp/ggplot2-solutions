@@ -14,3 +14,4 @@ if (ggplot2_req == FALSE) {install.packages('ggplot2')}
 library(ggplot2)
 mpg <- mpg
 print(mpg)
+```
