@@ -36,6 +36,8 @@ print(mpg)
 10 audi         a4 quattro   2    2008     4 manual(m6) 4        20    28 p     compact
 ```
 
+
+
 >List five functions that you could use to get more information about the mpg dataset.
 
 `class` - allows us to check the class of the `mpg` object
@@ -45,8 +47,26 @@ print(mpg)
 `dim` - returns the dimensions (nrow, ncol) of the `mpg` object. `str` and `summary` will also return this information.
 
 
-Now, we want to convert the `$cty` and `$hwy` (short for
-'city' and 'highway' respectively) columns from the imperial 'miles per gallon' to the metric 'litres per 100 kilometres'.
 
+>How can you find out what other datasets are included with ggplot2?
+
+We can check out all the included datasets in the `ggplot2` package by heading over to the data folder within ggplot2's [github](https://github.com/tidyverse/ggplot2/tree/main/data)
+
+
+
+>Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance travelled with fixed amount of fuel). How could you convert cty and hwy into the European standard of l/100km?
+
+We want to convert the `$cty` and `$hwy` (short for
+'city' and 'highway' respectively) columns from the imperial 'miles per gallon' to the metric 'litres per 100 kilometres'.
+There's a number of ways one could do this:
+
+**Via column maths**
 ```R
-mpg_metric$cty <- mpg$
+MilesToKM <- 1.60934
+GalToLitre <- 3.78541
+## Create a new object named mpg_metric
+mpg_metric <- mpg
+## Convert
+mpg_metric$cty <- ((100 / mpg$cty) / MilesToKM) * GalToLitre
+mpg_metric$hwy <- ((100 / mpg$hwy) / MilesToKM) * GalToLitre
+```
