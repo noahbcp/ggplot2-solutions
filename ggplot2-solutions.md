@@ -81,3 +81,16 @@ mpg.to.kml <- function(mpg, n.kilometers = 100) {
 mpg_metric$cty <- mpg.to.kml(mpg$cty)
 mpg_metric$hwy <- mpg.to.kml(mpg$hwy)
 ```
+
+
+
+**Via dplyr's `mutate` function**
+```R
+mpg_metric <- mpg %>%
+    mutate(
+        cty <- mpg.to.kml(cty),
+        hwy <- mpg.to.kml(hwy),
+        .keep = c('unused')
+    )
+```
+
