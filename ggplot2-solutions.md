@@ -5,7 +5,7 @@ These are my solutions (and thought processes behind) to the exercises provided 
 ---
 
 ## 2.2 - Fuel economy data
-# Exercises 2.2.1
+### Exercises 2.2.1
 
 First, we want to load the [ggplot2](https://ggplot2.tidyverse.org/) & [dplyr](https://dplyr.tidyverse.org/) packages and fetch the mpg [tibble](https://tibble.tidyverse.org/).
 I've opted to save this as the variable `mpg` so I can keep track of it in RStudio's environment panel.
