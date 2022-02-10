@@ -55,7 +55,6 @@ We can check out all the included datasets in the `ggplot2` package by heading o
 
 
 >Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance travelled with fixed amount of fuel). How could you convert cty and hwy into the European standard of l/100km?
-
 We want to convert the `$cty` and `$hwy` columns from the imperial 'miles per gallon' to the metric 'litres per 100 kilometres'.
 There's a number of ways one could do this:
 
