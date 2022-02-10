@@ -57,7 +57,7 @@ We can check out all the included datasets in the `ggplot2` package by heading o
 >Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance travelled with fixed amount of fuel). How could you convert cty and hwy into the European standard of l/100km?
 
 We want to convert the `$cty` and `$hwy` columns from the imperial 'miles per gallon' to the metric 'liters per 100 kilometers'.
-There's a number of ways one could do this:
+There's a few ways one could do this:
 
 **Via column maths**
 ```R
@@ -87,10 +87,17 @@ mpg_metric$hwy <- mpg.to.kml(mpg$hwy)
 **Via dplyr's `mutate` function**
 ```R
 mpg_metric <- mpg %>%
-    mutate(
-        cty <- mpg.to.kml(cty),
-        hwy <- mpg.to.kml(hwy),
-        .keep = c('unused')
-    )
+    mutate(cty = mpg.to.kml(cty),
+           hwy = mpg.to.kml(hwy),
+           .keep = c('unused'))
 ```
 
+The combined fuel economy is also pretty important so lets use `mutate` and `select` to add a new column, `combined` to our dataset that is the mean of the respective rows in hwy and cty. 
+
+```R
+mpg_metric <- mpg %>%
+    mutate(cty = mpg.to.kml(cty),
+           hwy = mpg.to.kml(hwy),
+           .keep = c('unused')) %>%
+    mutate(combined = rowMeans(select(mpg_metric, hwy, cty)))
+```
