@@ -148,7 +148,7 @@ mpg_models <- mpg %>%
     transmute('unique' = length(unique(model))) %>%
     ## restricts data to unique values only (i.e. leaves only 1 of each manufacturer)
     unique %>%
-    ## ungroups the data allowing it to be manipulated
+    ## grouping by manufacturer is now superfluous as only one entry of each manufacturer is in the data frame
     ungroup %>%
     ## arranges the data by the unique column in descending order
     arrange(desc(unique))
