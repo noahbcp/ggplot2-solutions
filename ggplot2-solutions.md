@@ -69,3 +69,15 @@ mpg_metric <- mpg
 mpg_metric$cty <- ((100 / mpg$cty) / MilesToKM) * GalToLitre
 mpg_metric$hwy <- ((100 / mpg$hwy) / MilesToKM) * GalToLitre
 ```
+
+We can also define a function, `mpg.to.kml` to do these calculations:
+```R
+mpg.to.kml <- function(mpg, n.kilometers = 100) {
+    MilesToKM <- 1.60934
+    GalToLitre <- 3.78541
+    ((100 / mpg) / MilesToKM) * GalToLitre
+}
+## Convert
+mpg_metric$cty <- mpg.to.kml(mpg$cty)
+mpg_metric$hwy <- mpg.to.kml(mpg$hwy)
+```
