@@ -20,7 +20,7 @@ library(dplyr)
 mpg <- mpg
 print(mpg)
 ```
-```
+```R
 # A tibble: 234 × 11
    manufacturer model      displ  year   cyl trans      drv     cty   hwy fl    class  
    <chr>        <chr>      <dbl> <int> <int> <chr>      <chr> <int> <int> <chr> <chr>  
