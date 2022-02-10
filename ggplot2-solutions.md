@@ -138,3 +138,36 @@ car_manufacturers <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
 # 14 mercury          4
 # 15 lincoln          3
 ```
+
+We can also find the manufacturer with the most *unique* models:
+```R
+mpg_models <- mpg %>%
+    ## group mpg by manufacturer; redundant for this dataset as it is already grouped
+    group_by(manufacturer) %>%
+    ## generates a new column, 'unique', which includes the respective manufacturer's number of unique models
+    transmute('unique' = length(unique(model))) %>%
+    ## restricts data to unique values only (i.e. leaves only 1 of each manufacturer)
+    unique %>%
+    ## ungroups the data allowing it to be manipulated
+    ungroup %>%
+    ## arranges the data by the unique column in descending order
+    arrange(desc(unique))
+
+#    manufacturer unique
+#    <chr>         <int>
+#  1 toyota            6
+#  2 chevrolet         4
+#  3 dodge             4
+#  4 ford              4
+#  5 volkswagen        4
+#  6 audi              3
+#  7 nissan            3
+#  8 hyundai           2
+#  9 subaru            2
+# 10 honda             1
+# 11 jeep              1
+# 12 land rover        1
+# 13 lincoln           1
+# 14 mercury           1
+# 15 pontiac           1
+```
