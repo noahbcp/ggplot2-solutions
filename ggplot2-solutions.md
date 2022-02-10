@@ -101,3 +101,40 @@ mpg_metric <- mpg %>%
            .keep = c('unused')) %>%
     mutate(combined = rowMeans(select(mpg_metric, hwy, cty)))
 ```
+
+
+
+>Which manufacturer has the most models in this dataset? Which model has the most variations? Does your answer change if you remove the redundant specification of drive train (e.g. “pathfinder 4wd”, “a4 quattro”) from the model name?
+
+An easy way to generate a count summary of a column is the `table` function. However, this won't give us sorted data (i.e. descending/ascending order) which could be troublesome if you have many variables.
+```R
+table(mpg$manufacturer)
+
+#      audi  chevrolet      dodge       ford      honda    hyundai       jeep land rover    lincoln    mercury     nissan    pontiac 
+#        18         19         37         25          9         14          8          4          3          4         13          5 
+#    subaru     toyota volkswagen 
+#        14         34         27 
+```
+
+Instead, the `group_by` and `tally` functions could be used:
+```R
+car_manufacturers <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
+
+#   manufacturer     n
+#   <chr>        <int>
+#  1 dodge           37
+#  2 toyota          34
+#  3 volkswagen      27
+#  4 ford            25
+#  5 chevrolet       19
+#  6 audi            18
+#  7 hyundai         14
+#  8 subaru          14
+#  9 nissan          13
+# 10 honda            9
+# 11 jeep             8
+# 12 pontiac          5
+# 13 land rover       4
+# 14 mercury          4
+# 15 lincoln          3
+```
