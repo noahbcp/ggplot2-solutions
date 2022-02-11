@@ -187,9 +187,10 @@ mpg_models <- mpg %>%
 
 
 To remove the drive train references in the model name we can employ the `stringr` package. 
-First, we want to detect all references to drive train and remove them; to do this
-we'll invoke the `str_remove_all()` function and we'll then remove any leftover
-white spaces using `str_squish()` and convert it to a table before finally returning a tibble.
+First, we want to detect all references to drive train in the model name and remove them. 
+To do this we'll invoke the `str_remove_all()` function and we'll then remove any leftover
+white spaces using `str_squish()` and convert it to a table before finally returning a tibble
+that tells us how many releases of each car model released, including those with different drive trains.
 
 ```R
 stringr_req <- require(stringr)
