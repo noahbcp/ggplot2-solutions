@@ -189,9 +189,8 @@ mpg_models <- mpg %>%
 To remove the drive train references in the model name we can employ the `stringr` package. 
 First, we want to detect all references to drive train and remove them; to do this
 we'll invoke the `str_remove_all()` function and we'll then remove any leftover
-white spaces using `str_squish()` and convert it to a table.
+white spaces using `str_squish()` and convert it to a table before finally returning a tibble.
 
-Next we
 ```R
 stringr_req <- require(stringr)
 if (stringr_req == FALSE) {install.packages('stringr')}
@@ -200,5 +199,12 @@ remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
 remove_redundant <- mpg$model %>%
     str_remove_all(remove) %>%
     str_squish() %>%
-    table()
-
+    table %>%
+    ## Note that as.data.frame() will also work here if you wish to avoid tibbles
+    as_tibble() %>%
+    ## Renames column 1 and column 2; rename_at doesn't support concatenated inputs
+    rename_at(1, ~'Model') %>% rename_at(2, ~'n') %>%
+    ## Arranges the tibble by descending order of column 'n'
+    arrange(desc(n)) %>%
+    print()
+```
