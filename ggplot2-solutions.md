@@ -198,9 +198,10 @@ if (stringr_req == FALSE) {install.packages('stringr')}
 ## 'quattro', '4wd', '2wd' and 'awd' all reference drivetrains and are thus redundant
 remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
 remove_redundant <- mpg$model %>%
+    ## str_remove_all must be used if we are to remove ALL occurrences
     str_remove_all(remove) %>%
     str_squish() %>%
-    table %>%
+    table() %>%
     ## Note that as.data.frame() will also work here if you wish to avoid tibbles
     as_tibble() %>%
     ## Renames column 1 and column 2; rename_at doesn't support concatenated inputs
@@ -209,7 +210,7 @@ remove_redundant <- mpg$model %>%
     arrange(desc(n)) %>%
     print()
     
-#   # A tibble: 37 x 2
+#   A tibble: 37 x 2
 #   Model                n
 #   <chr>            <int>
 #  1 a4                 15
@@ -223,4 +224,44 @@ remove_redundant <- mpg$model %>%
 #  9 impreza             8
 # 10 camry               7
 #  ... with 27 more rows
+```
+
+If we instead want to see which *manufacturer* released the most models we just
+need to change the `mpg$model` at the beginning of the pipe function to `mpg$manufacturer`.
+```R
+stringr_req <- require(stringr)
+if (stringr_req == FALSE) {install.packages('stringr')}
+## 'quattro', '4wd', '2wd' and 'awd' all reference drivetrains and are thus redundant
+remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
+remove_redundant <- mpg$manufacturer %>%
+    ## str_remove_all must be used if we are to remove ALL occurrences
+    str_remove_all(remove) %>%
+    str_squish() %>%
+    table() %>%
+    ## Note that as.data.frame() will also work here if you wish to avoid tibbles
+    as_tibble() %>%
+    ## Renames column 1 and column 2; rename_at doesn't support concatenated inputs
+    rename_at(1, ~'Model') %>% rename_at(2, ~'n') %>%
+    ## Arranges the tibble by descending order of column 'n'
+    arrange(desc(n)) %>%
+    print()
+
+#  A tibble: 15 x 2
+#   Model          n
+#   <chr>      <int>
+#  1 dodge         37
+#  2 toyota        34
+#  3 volkswagen    27
+#  4 ford          25
+#  5 chevrolet     19
+#  6 audi          18
+#  7 hyundai       14
+#  8 subaru        14
+#  9 nissan        13
+# 10 honda          9
+# 11 jeep           8
+# 12 pontiac        5
+# 13 land rover     4
+# 14 mercury        4
+# 15 lincoln        3
 ```
