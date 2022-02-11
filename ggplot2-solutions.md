@@ -119,7 +119,8 @@ An easy way to generate a count summary of a column is the `table()` function.
 However, this won't give us sorted data (i.e. descending/ascending order) which could be troublesome if you have many variables.
 ```R
 table(mpg$manufacturer)
-
+```
+```R
 #      audi  chevrolet      dodge       ford      honda    hyundai       jeep land rover    lincoln    mercury     nissan    pontiac 
 #        18         19         37         25          9         14          8          4          3          4         13          5 
 #    subaru     toyota volkswagen 
@@ -129,7 +130,8 @@ table(mpg$manufacturer)
 Instead, the `group_by()` and `tally()` functions could be used:
 ```R
 total_models <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
-
+```
+```R
 #   manufacturer     n
 #   <chr>        <int>
 #  1 dodge           37
@@ -163,7 +165,8 @@ unique_models <- mpg %>%
     ungroup() %>%
     ## arranges the data by the unique column in descending order
     arrange(desc(unique))
-
+```
+```R
 #    manufacturer unique
 #    <chr>         <int>
 #  1 toyota            6
@@ -207,7 +210,8 @@ total_models <- mpg$model %>%
     ## Arranges the tibble by descending order of column 'n'
     arrange(desc(n)) %>%
     print()
-    
+```
+```R
 #   A tibble: 37 x 2
 #   Model                n
 #   <chr>            <int>
@@ -232,7 +236,6 @@ if (stringr_req == FALSE) {install.packages('stringr')}
 
 ## 'quattro', '4wd', '2wd' and 'awd' all reference drivetrains and are thus redundant
 remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
-
 total_models <- mpg$manufacturer %>%
     ## str_remove_all must be used if we are to remove ALL occurrences
     str_remove_all(remove) %>%
@@ -245,7 +248,8 @@ total_models <- mpg$manufacturer %>%
     ## Arranges the tibble by descending order of column 'n'
     arrange(desc(n)) %>%
     print()
-
+```
+```R
 #  A tibble: 15 x 2
 #   Model          n
 #   <chr>      <int>
