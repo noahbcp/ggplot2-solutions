@@ -128,7 +128,7 @@ table(mpg$manufacturer)
 
 Instead, the `group_by()` and `tally()` functions could be used:
 ```R
-car_manufacturers <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
+total_models <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
 
 #   manufacturer     n
 #   <chr>        <int>
@@ -151,7 +151,7 @@ car_manufacturers <- group_by(mpg, manufacturer) %>% tally(sort = TRUE)
 
 We can also find the manufacturer with the most *unique* models:
 ```R
-mpg_models <- mpg %>%
+unique_models <- mpg %>%
     ## group mpg by manufacturer; this doesn't change how the data looks but how 
     ## it acts when other dplyr verbs are applied to it
     group_by(manufacturer) %>%
@@ -195,7 +195,7 @@ stringr_req <- require(stringr)
 if (stringr_req == FALSE) {install.packages('stringr')}
 ## 'quattro', '4wd', '2wd' and 'awd' all reference drivetrains and are thus redundant
 remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
-remove_redundant <- mpg$model %>%
+total_models <- mpg$model %>%
     ## str_remove_all must be used if we are to remove ALL occurrences
     str_remove_all(remove) %>%
     str_squish() %>%
@@ -229,9 +229,11 @@ need to change the `mpg$model` at the beginning of the pipe function to `mpg$man
 ```R
 stringr_req <- require(stringr)
 if (stringr_req == FALSE) {install.packages('stringr')}
+
 ## 'quattro', '4wd', '2wd' and 'awd' all reference drivetrains and are thus redundant
 remove <- c('quattro' = '', '4wd' = '', '2wd' = '', 'awd' = '')
-remove_redundant <- mpg$manufacturer %>%
+
+total_models <- mpg$manufacturer %>%
     ## str_remove_all must be used if we are to remove ALL occurrences
     str_remove_all(remove) %>%
     str_squish() %>%
@@ -262,4 +264,43 @@ remove_redundant <- mpg$manufacturer %>%
 # 13 land rover     4
 # 14 mercury        4
 # 15 lincoln        3
+```
+
+Now, for some extra credit, let's plot each manufacturer's *total* and *unique* models.
+Note that for the `rbind` function to work; the column names across each constituent dataset
+must be identical.
+```R
+total_models <- mpg %>% 
+    group_by(manufacturer) %>% 
+    tally(sort = TRUE)
+
+unique_models <- mpg %>%
+    group_by(manufacturer) %>%
+    transmute('n' = length(unique(model))) %>%
+    unique() %>%
+    ungroup() %>%
+    arrange(desc(n))
+
+## Combine our two datasets into a single data frame
+data <- data.frame(rbind(total_models, unique_models)), 
+
+## Create the variable 'barfill' which serves to colour the bars on our chart
+## Rember, we must create one for each x & y combination 
+## (i.e. one for each unique amd total entry under a given manufacturer)
+barfill = as.factor(rep(c("overall", "unique"), each = 15))
+
+## Rearrange the manufacturers in descending order based on the total number of models from that manufacturer
+ggplot(data, aes(x = n, y = reorder(as.factor(manufacturer), n), fill = barfill)) +
+    ## Dodge is used here to force each bar to 'dodge' one another not to reference the manufacturer!
+    geom_bar(width = 0.7, stat = 'identity', position = 'dodge') + 
+    ## No need for gridlines along the y axis
+    ## I also am not a big fan of the default, left-aligned behaviour of ggtitle so I force it to center
+    theme(panel.grid.major.y = element_blank(), 
+          panel.grid.minor.y = element_blank(),
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5)) +
+    ## Give the plot a title & subtitle
+    ggtitle('Vehicle models per manufacturer', subtitle = '1999 - 2008') +
+    ## Label x & y axis, remove legend title
+    labs(x = 'Count', y = 'Model', fill = '')
 ```
