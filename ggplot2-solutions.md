@@ -304,3 +304,4 @@ ggplot(data, aes(x = n, y = reorder(as.factor(manufacturer), n), fill = barfill)
     ## Label x & y axis, remove legend title
     labs(x = 'Count', y = 'Model', fill = '')
 ```
+![Vehicle models per manufacturer](https://user-images.githubusercontent.com/98575657/153582623-0a330acb-a3fd-44d3-ab1b-fa86196c6ebc.png)
