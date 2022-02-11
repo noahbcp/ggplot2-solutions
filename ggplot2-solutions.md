@@ -207,4 +207,19 @@ remove_redundant <- mpg$model %>%
     ## Arranges the tibble by descending order of column 'n'
     arrange(desc(n)) %>%
     print()
+    
+#   # A tibble: 37 x 2
+#   Model                n
+#   <chr>            <int>
+#  1 a4                 15
+#  2 caravan            11
+#  3 ram 1500 pickup    10
+#  4 civic               9
+#  5 dakota pickup       9
+#  6 jetta               9
+#  7 mustang             9
+#  8 grand cherokee      8
+#  9 impreza             8
+# 10 camry               7
+#  ... with 27 more rows
 ```
