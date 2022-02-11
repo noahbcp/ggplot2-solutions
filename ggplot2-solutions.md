@@ -38,8 +38,6 @@ print(mpg)
 10 audi         a4 quattro   2    2008     4 manual(m6) 4        20    28 p     compact
 ```
 
-
-
 >List five functions that you could use to get more information about the mpg dataset.
 
 * `class()` - allows us to check the class of the `mpg` object
